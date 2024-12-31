@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Enter One-Time Passcode{% endblock %}
+
+{% block content%}
+<form method="POST">
+    <h3 align="center">Two Factor Authentication</h3>
+    <label for="otp">Check your email box.</label>
+    <input type="text" class="form-control" id="otp" name="otp" placeholder="Enter One-Time passcode"/>
+    <br>
+    <button type="submit" class="btn btn-primary">Login</button>
+</form>
+{% endblock%}

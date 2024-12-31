@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Reset{% endblock %}
+
+{% block content %}
+<form method="POST">
+    <h3 align="center">Password Reset</h3>
+    <label for="email">Email Address</label>
+    <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" value="{{ email }}"/>
+    <br>
+    <button type="submit" class="btn btn-primary" name="action" value="send_otp">Sent OTP</button>
+</form>
+<br>
+<form method="POST">
+    <label for="text">OTP</label>
+    <input type="text" class="form-control" id="otp" name="otp" placeholder="Enter OTP" />
+    <br>
+    <button type="submit" class="btn btn-primary" name="action" value="password_reset">Password Reset</button>
+</form>
+{% endblock %}

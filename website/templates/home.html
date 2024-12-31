@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<h1 align="center">Flash Cards</h1>
+<div class="text-right">
+    <a href="/add" class="btn btn-primary mb-3">Add Flashcard</a>
+</div>
+<div class="container">
+    {% for card in flashcards %}
+    <div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">{{ card.question|replace('\n', '<br>')|safe }}</h5>
+                <button class="btn btn-info" onclick="toggleAnswer({{ card.id }})">Show Answer</button>
+                <p class="card-text answer" id="answer-{{ card.id }}" style="display:none">{{ card.answer|replace('\n', '<br>')|safe }}</p>
+                <p class="card-text"><small class="text-muted">{{ card.category }}</small></p>
+                {% if card.owner_id == user.id %}
+                <a href="/delete/{{ card.id }}" class="btn btn-danger btn-sm float-right">Delete</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    </div>
+    {% endfor %}
+</div>
+<script>
+    // Function to toggle the visibility of the answer
+    function toggleAnswer(cardId) {
+        var answerElement = document.getElementById('answer-' + cardId);
+        
+        // Toggle visibility
+        if (answerElement.style.display === "none") {
+            answerElement.style.display = "block";
+        } else {
+            answerElement.style.display = "none";
+        }
+    }
+</script>
+
+{% endblock %}
