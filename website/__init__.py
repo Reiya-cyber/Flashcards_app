@@ -18,9 +18,9 @@ def create_app():
     app.config['MAIL_PORT'] = 465
     app.config['MAIL_USE_SSL'] = True
     app.config['MAIL_USE_TLS'] = False
-    app.config['MAIL_USERNAME'] = '*******@gmail.com'  # Replace with your gamil address
-    app.config['MAIL_PASSWORD'] = '**** **** **** ****'
-    app.config['MAIL_DEFAULT_SENDER'] = 'Note app authentication' # Replace with your app password of your gmail account
+    app.config['MAIL_USERNAME'] = 'papichu.chime@gmail.com'  # Replace with your gamil address
+    app.config['MAIL_PASSWORD'] = 'ebyv hiqu lntz wqsv' # Replace with your app password of your gmail account
+    app.config['MAIL_DEFAULT_SENDER'] = 'Note app authentication' 
     app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=5)
 
 

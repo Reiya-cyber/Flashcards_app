@@ -3,6 +3,37 @@
 
 {% block content %}
 <h1 align="center">Flash Cards</h1>
+<!-- Search Bar-->
+<div class="text-right mb-3">
+    <form method="GET" action="/" class="form-inline justify-content-end">
+        <input type="text" name="query" class="form-control mr-2" placeholder="Search flashcards..." value="{{ query }}">
+        <button type="submit" class="btn btn-outline-primary">Search</button>
+    </form>
+</div>
+
+<!-- Flashcards per page selection -->
+<div class="text-right mb-3">
+    <form method="GET" action="/" class="form-inline justify-content-start">
+        <label for="per_page" class="mr-2">Flashcards per page:</label>
+        <select id="per_page" name="per_page" class="form_control mr-2" onchange="this.form.submit()">
+            <option value="5" {% if per_page == 5 %}selected{% endif %}>5</option>
+            <option value="10" {% if per_page == 10 %}selected{% endif %}>10</option>
+            <option value="15" {% if per_page == 15 %}selected{% endif %}>15</option>
+            <option value="20" {% if per_page == 20 %}selected{% endif %}>20</option>
+        </select>
+    </form>
+</div>
+
+<!-- Display the number of results -->
+{% if result_count and query %}
+    <p class="text-center">Found {{ result_count }} result{{ 's' if result_count > 1 else ''}} for "{{query}}"</p>
+{% else %}
+    {% if query%}
+        <p class="text-center">No results found for "{{ query }}"</p>
+    {% endif %}
+{%endif%}
+
+<!-- Add Flashcard Button -->
 <div class="text-right">
     <a href="/add" class="btn btn-primary mb-3">Add Flashcard</a>
 </div>
@@ -14,6 +45,8 @@
             <div class="card-body">
                 <h5 class="card-title">{{ card.question|replace('\n', '<br>')|safe }}</h5>
                 <button class="btn btn-info" onclick="toggleAnswer({{ card.id }})">Show Answer</button>
+                <br>
+                <br>
                 <p class="card-text answer" id="answer-{{ card.id }}" style="display:none">{{ card.answer|replace('\n', '<br>')|safe }}</p>
                 <p class="card-text"><small class="text-muted">{{ card.category }}</small></p>
                 {% if card.owner_id == user.id %}
@@ -24,6 +57,21 @@
     </div>
     </div>
     {% endfor %}
+</div>
+
+<!--Pagination Controls-->
+<div class="text-center mt-4">
+    {% if flashcards.has_prev %}
+        <a href="{{ url_for('views.home', page=flashcards.prev_num, query=query, per_page=per_page)}}" class="btn btn-secondary">Previous</a>
+    {% endif %}
+
+    {% for page_num in range(1, total_pages+1) %}
+        <a href="{{ url_for('views.home', page=page_num, query=query, per_page=per_page) }}" class="btn btn-outline-secondary {% if page_num == page %}active{% endif %}">{{page_num}}</a>
+    {% endfor %}
+
+    {% if flashcards.has_next %}
+        <a href="{{ url_for('views.home', page=flashcards.next_num, query=query, per_page=per_page) }}" class="btn btn-secondary">Next</a>
+    {% endif %}
 </div>
 <script>
     // Function to toggle the visibility of the answer

@@ -9,8 +9,20 @@ views = Blueprint('views', __name__)
 @views.route('/', methods=['GET', 'POST'])
 @login_required
 def home():
-    flashcards = Flashcard.query.all()
-    return render_template("home.html", user=current_user, flashcards=flashcards)
+    query = request.args.get('query', '')
+    page = request.args.get('page', 1, type=int)
+    per_page = request.args.get('per_page', 5, type=int)
+    if query:
+        flashcards = Flashcard.query.filter(
+            Flashcard.question.ilike(f"%{query}%") |
+            Flashcard.answer.ilike(f"%{query}%") |
+            Flashcard.category.ilike(f"%{query}%")
+        ).paginate(page=page, per_page=per_page)
+    else:
+        flashcards = Flashcard.query.paginate(page=page, per_page=per_page)
+    result_count = flashcards.total
+    total_pages = flashcards.pages
+    return render_template("home.html", user=current_user, flashcards=flashcards, query=query, result_count=result_count, total_pages=total_pages, page=page, per_page=per_page)
 
 @views.route('/add', methods=['GET', 'POST'])
 def add_flashcard():
