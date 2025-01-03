@@ -24,6 +24,25 @@
     </form>
 </div>
 
+<!-- Sorting Options -->
+<div class="text-right mb-3">
+    <form method="GET" action="/" class="form-inline justify-content-start">
+        <input type="hidden" name="query" value="{{ query }}">
+        <input type="hidden" name="per_page" value="{{ per_page }}">
+        <label for="sort_by" class="mr-2">Sort By:</label>
+        <select name="sort_by" id="sort-by" class="form-control mr-2">
+            <option value="date_created" {% if sort_by == 'date_created' %}selected{% endif %}>Date Created</option>
+            <option value="question" {% if sort_by == 'question' %}selected{% endif %}>Question</option>
+            <option value="category" {% if sort_by == 'category' %}selected{% endif %}>Category</option>
+        </select>
+        <select name="sort_order" id="sort_order" class="form-control mr-2">
+            <option value="asc" {% if sort_order == "asc" %}selected{% endif %}>Ascending</option>
+            <option value="desc" {% if sort_order == "desc" %}selected{% endif %}>Descending</option>
+        </select>
+        <button type="submit" class="btn btn-outline-primary">Sort</button>
+    </form>
+</div>
+
 <!-- Display the number of results -->
 {% if result_count and query %}
     <p class="text-center">Found {{ result_count }} result{{ 's' if result_count > 1 else ''}} for "{{query}}"</p>
@@ -50,7 +69,9 @@
                 <p class="card-text answer" id="answer-{{ card.id }}" style="display:none">{{ card.answer|replace('\n', '<br>')|safe }}</p>
                 <p class="card-text"><small class="text-muted">{{ card.category }}</small></p>
                 {% if card.owner_id == user.id %}
-                <a href="/delete/{{ card.id }}" class="btn btn-danger btn-sm float-right">Delete</a>
+                <a href="/delete/{{ card.id }}" class="btn btn-danger btn-sm float-right ml-2">Delete</a>
+                <a href="/edit/{{card.id}}" class="btn btn-success btn-sm float-right">Edit</a>
+                
                 {% endif %}
             </div>
         </div>

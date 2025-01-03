@@ -17,6 +17,7 @@ def send_email(receiver):
     mail = Mail(current_app)
     otp = generateOTP()
     session['otp'] = otp
+    print(f'######### {otp}')
 
     body = f"""
     <html>

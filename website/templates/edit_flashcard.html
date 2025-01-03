@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Edit FlashCard{% endblock %}
+
+{% block content %}
+<h3 align="center">Edit Flashcard</h3>
+<form method="POST">
+    <div class="form-group">
+        <label for="question">Question</label>
+        <textarea class="form-control" rows="5" id="question" name="question" placeholder="Enter question">{{ card.question }}</textarea>
+    </div>
+    <div class="form-group">
+        <label for="answer">Answer</label>
+        <textarea class="form-control" rows="5" id="answer" name="answer" placeholder="Enter answer">{{ card.answer }}</textarea>
+    </div>
+    <div class="form-group">
+        <label for="category">Category</label>
+        <textarea class="form-control" rows="1" id="category" name="category" placeholder="Enter category (optional)">{{ card.categpry }}</textarea>
+    </div>
+    <br/>
+    <button type="submit" class="btn btn-primary btn-block">Updaate Flashcard</button>
+    <br>
+    <a href="/" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}
